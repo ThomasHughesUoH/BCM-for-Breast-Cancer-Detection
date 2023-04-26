@@ -14,8 +14,14 @@ Overall, this class offers a powerful and flexible tool for binary classificatio
 
 Example Data Visualisation Output:
 
-![Figure_1](https://user-images.githubusercontent.com/94536625/234714695-6693c1e7-8b82-40f2-b546-b0cf818d386b.png)
+Countplot:
 
-![Figure_](https://user-images.githubusercontent.com/94536625/234714711-3e30ee87-7755-4c57-ae06-842a9a2f53a8.png)
+![Figure_1 2](https://user-images.githubusercontent.com/94536625/234716017-2c221ea7-202d-4bef-8522-29b31bee6034.png)
 
-![Figure_3](https://user-images.githubusercontent.com/94536625/234714718-4e853678-b4c3-4b1d-a7e8-534c306f6161.png)
+ROC Curve Plot:
+
+![Figure_1 3](https://user-images.githubusercontent.com/94536625/234716036-d784891b-e26b-456c-8232-cf6746d3bb35.png)
+
+Confusion Matrix Plot:
+
+![Figure_1 4](https://user-images.githubusercontent.com/94536625/234716051-0fe573dd-a110-40e8-a3a1-a22f71abff96.png)
