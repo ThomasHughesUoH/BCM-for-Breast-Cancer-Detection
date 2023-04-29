@@ -73,46 +73,64 @@ class BinaryClassificationModel:
         """
         self.classifier.fit(self.X_train, self.y_train)
 
-    def evaluate_model(self):
+    def evaluate_model(self, n=10):
         """
-        Evaluates the logistic regression model on the preprocessed test data and
-        generates and displays various evaluation metrics and plots, including the
-        accuracy score, ROC curve, confusion matrix, and any predicted cancer cases.
+        Evaluates the performance of the logistic regression model on the testing data.
+        
+        Args:
+            n (int, optional): Number of top correlated features to plot. Defaults to 10.
         """
+        # Preprocess the data
+        self.preprocess_data()
+        
+        # Train the model
+        self.train_model()
+        
+        # Generate predictions on the testing data
         y_pred = self.classifier.predict(self.X_test)
+        
+        # Compute evaluation metrics
         accuracy = accuracy_score(self.y_test, y_pred)
-        print("Accuracy:", accuracy)
-
-        y_pred_prob = self.classifier.predict_proba(self.X_test)[:, 1]
-        fpr, tpr, thresholds = roc_curve(self.y_test, y_pred_prob)
+        fpr, tpr, _ = roc_curve(self.y_test, y_pred)
         roc_auc = auc(fpr, tpr)
-
-        # create the ROC curve plot
-        sns.set(style='ticks')
-        fig, ax = plt.subplots(figsize=(8, 6))
-        ax.plot(fpr, tpr, label=f'ROC curve (area = {roc_auc:.2f})', color='#FFA500', linewidth=2)
-        ax.plot([0, 1], [0, 1], 'k--', linewidth=2)
-        ax.set_xlabel('False Positive Rate', fontsize=14)
-        ax.set_ylabel('True Positive Rate', fontsize=14)
-        ax.set_title('Receiver Operating Characteristic', fontsize=16)
-        ax.tick_params(axis='both', which='major', labelsize=12)
-        ax.legend(loc='lower right', fontsize=12)
-        sns.despine()
-
-        plt.tight_layout()
+        tn, fp, fn, tp = confusion_matrix(self.y_test, y_pred).ravel()
+        
+        # Print evaluation metrics
+        print(f"Accuracy: {accuracy:.3f}")
+        print(f"ROC AUC: {roc_auc:.3f}")
+        print(f"True Positives: {tp}")
+        print(f"True Negatives: {tn}")
+        print(f"False Positives: {fp}")
+        print(f"False Negatives: {fn}")
+        
+        # Plot ROC curve
+        plt.figure(figsize=(8, 6))
+        plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+        plt.plot([0, 1], [0, 1], 'k--')
+        plt.xlabel('False Positive Rate', fontsize=14)
+        plt.ylabel('True Positive Rate', fontsize=14)
+        plt.title('ROC Curve', fontsize=18, fontweight='bold')
+        plt.legend(loc="lower right")
         plt.show()
-
-        # create the confusion matrix plot
-        confusion = confusion_matrix(self.y_test, y_pred)
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.heatmap(confusion, annot=True, cmap='Blues', cbar=False, fmt='g')
-        ax.set_xlabel('Predicted Class', fontsize=14)
-        ax.set_ylabel('True Class', fontsize=14)
-        ax.set_title('Confusion Matrix', fontsize=16)
-        ax.tick_params(axis='both', which='major', labelsize=12)
-        ax.xaxis.set_ticklabels(['Benign', 'Malignant'], fontsize=12)
-        ax.yaxis.set_ticklabels(['Benign', 'Malignant'], fontsize=12, rotation=0)
-        plt.tight_layout()
+        
+        # Plot confusion matrix
+        plt.figure(figsize=(8, 6))
+        sns.set(font_scale=1.4)
+        sns.heatmap(confusion_matrix(self.y_test, y_pred), annot=True, fmt='g')
+        plt.xlabel('Predicted', fontsize=14)
+        plt.ylabel('True', fontsize=14)
+        plt.title('Confusion Matrix', fontsize=18, fontweight='bold')
+        plt.show()
+        
+        # Plot bar chart of top n correlated features
+        corr = self.df.corr()
+        corr_target = abs(corr["target"])
+        top_features = corr_target.sort_values(ascending=False)[1:n+1]
+        top_features.plot(kind="bar", figsize=(10,10))
+        plt.xlabel('Features', fontsize=14)
+        plt.ylabel('Correlation with target', fontsize=14)
+        plt.title(f'Top {n} Correlated Features', fontsize=18, fontweight='bold')
+        plt.xticks(rotation=45, ha='right', fontsize=8)
         plt.show()
 
         # create the predicted cancer cases file
