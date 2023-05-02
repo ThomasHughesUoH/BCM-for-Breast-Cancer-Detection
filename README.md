@@ -11,15 +11,3 @@ The training method leverages a range of Scikit-learn algorithms for binary clas
 To evaluate the performance of the trained model, the class implements various evaluation metrics, such as the accuracy score, receiver operating characteristic (ROC) curve, and confusion matrix. The accuracy score provides a straightforward measure of the model's overall classification performance. The ROC curve and confusion matrix, on the other hand, provide a more in-depth evaluation of the model's performance by assessing the trade-off between true positive rate and false positive rate, as well as visualizing the frequency of correct and incorrect predictions, respectively. Finally, the class also allows for the identification of any predicted cancer cases, which can be critical in medical applications.
 
 Overall, this program offers a powerful and flexible tool for binary classification analysis in the medical domain, with a specific emphasis on cancer classification. Its scalability and versatility make it applicable to other classification problems beyond medical data, thus providing a broad range of use cases for industry professionals.
-
-Example Data Visualisation Output:
-
-   ![Figure_1](https://user-images.githubusercontent.com/94536625/235740112-4688602d-0d14-489b-903b-8ea878bc9ed3.png)
-
-   ![Figure_2](https://user-images.githubusercontent.com/94536625/235740133-512c4362-223f-4b0a-b2cf-a4704dbc4c28.png)
-
-   ![Figure_3](https://user-images.githubusercontent.com/94536625/235740144-d9a56aec-3c3a-4e28-b32f-effc2fea1139.png)
-
-   ![Figure_4](https://user-images.githubusercontent.com/94536625/235740156-52681311-01fa-49d7-8a46-8026485bf092.png)
-
-   ![Figure_5](https://user-images.githubusercontent.com/94536625/235740188-4697a64c-070d-47c6-93b1-25468a93b27f.png)
