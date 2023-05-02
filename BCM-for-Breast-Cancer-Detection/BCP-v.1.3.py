@@ -34,7 +34,7 @@ class breast_cancer_binary_classification_model:
         self.scaler = StandardScaler()
         self.classifier = LogisticRegression(random_state=42, max_iter=max_iter, solver='lbfgs')
 
-    def visualize_class_distribution(self):
+    def visualise_class_distribution(self):
         """
         Plots the count of instances for each target class in the dataset.
         """
@@ -174,7 +174,7 @@ class breast_cancer_binary_classification_model:
 
         # Set the style and create the heatmap
         sns.set(style="ticks", font_scale=1.2)
-        plt.figure(figsize=(10, 8))
+        plt.figure(figsize=(16, 14))
         sns.heatmap(corr_matrix, annot=True, cmap="Blues", linewidths=0.5)
 
         # Set the title and axis labels
@@ -183,8 +183,8 @@ class breast_cancer_binary_classification_model:
         plt.ylabel('Features', fontsize=14, fontweight='bold')
 
         # Set tick label size
-        plt.xticks(fontsize=10)
-        plt.yticks(fontsize=10)
+        plt.xticks(fontsize=9, rotation=45)
+        plt.yticks(fontsize=9)
 
         # Display the plot
         plt.show()
@@ -192,7 +192,7 @@ class breast_cancer_binary_classification_model:
 if __name__ == "__main__":
     data = load_breast_cancer()
     model = breast_cancer_binary_classification_model(data, max_iter=3000)
-    model.visualize_class_distribution()
+    model.visualise_class_distribution()
     model.feature_selection_correlation()
     model.preprocess_data()
     model.train_model()
