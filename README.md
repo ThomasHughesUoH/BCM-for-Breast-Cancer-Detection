@@ -14,14 +14,8 @@ Overall, this program offers a powerful and flexible tool for binary classificat
 
 Example Data Visualisation Output:
 
-Countplot:
+                                              ![Figure_1 2](https://user-images.githubusercontent.com/94536625/234716017-2c221ea7-202d-4bef-8522-29b31bee6034.png)
 
-![Figure_1 2](https://user-images.githubusercontent.com/94536625/234716017-2c221ea7-202d-4bef-8522-29b31bee6034.png)
-
-ROC Curve Plot:
-
-![Figure_1 3](https://user-images.githubusercontent.com/94536625/234716036-d784891b-e26b-456c-8232-cf6746d3bb35.png)
-
-Confusion Matrix Plot:
-
-![Figure_1 4](https://user-images.githubusercontent.com/94536625/234716051-0fe573dd-a110-40e8-a3a1-a22f71abff96.png)
+                                              ![Figure_1 3](https://user-images.githubusercontent.com/94536625/234716036-d784891b-e26b-456c-8232-cf6746d3bb35.png)
+                                              
+                                              ![Figure_1 4](https://user-images.githubusercontent.com/94536625/234716051-0fe573dd-a110-40e8-a3a1-a22f71abff96.png)
