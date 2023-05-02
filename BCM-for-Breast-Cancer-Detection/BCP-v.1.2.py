@@ -25,7 +25,7 @@ class BinaryClassificationModel:
 
         Args:
             data (sklearn.datasets.base.Bunch): A bunch object containing both the features and target.
-            max_iter (int, optional): Maximum number of iterations taken for the solver to converge. Defaults to 5000.
+            max_iter (int, optional): Maximum number of iterations taken for the solver to converge. Defaults to 3000.
         """
         self.data = data
         self.df = pd.DataFrame(np.c_[data.data, data.target], columns=list(data.feature_names) + ['target'])
@@ -38,25 +38,25 @@ class BinaryClassificationModel:
         """
         Plots the count of instances for each target class in the dataset.
         """
-        sns.set(style="whitegrid")  # set the style of the plot
+        sns.set(style="whitegrid", palette=['blue', 'grey'])  # set the style and color palette of the plot
         fig, ax = plt.subplots(figsize=(8, 6))  # set the size of the plot
-    
+
         # create the countplot
-        ax = sns.countplot(x='target', data=self.df, palette='Set2')
-    
+        ax = sns.countplot(x='target', data=self.df)
+
         # customize the plot
         ax.set_title('Distribution of Target Classes', fontsize=18, fontweight='bold')
         ax.set_xlabel('Target Class', fontsize=14, fontweight='bold')
         ax.set_ylabel('Count', fontsize=14, fontweight='bold')
         ax.tick_params(axis='both', labelsize=12)
-    
+
         # add annotations to the bars
         for p in ax.patches:
             ax.annotate(f"{p.get_height():.0f}", 
                         (p.get_x() + p.get_width() / 2., p.get_height()), 
                         ha='center', va='center', fontsize=12, color='black', xytext=(0, 10), 
                         textcoords='offset points')
-    
+
         plt.tight_layout()  # adjust the spacing between subplots
         plt.show()  # display the plot
 
@@ -105,32 +105,40 @@ class BinaryClassificationModel:
         
         # Plot ROC curve
         plt.figure(figsize=(8, 6))
-        plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
-        plt.plot([0, 1], [0, 1], 'k--')
+        plt.plot(fpr, tpr, color='blue', label='ROC curve (AUC = %0.2f)' % roc_auc)
+        plt.plot([0, 1], [0, 1], linestyle='--', color='grey')
         plt.xlabel('False Positive Rate', fontsize=14)
         plt.ylabel('True Positive Rate', fontsize=14)
-        plt.title('ROC Curve', fontsize=18, fontweight='bold')
+        plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18, fontweight='bold')
         plt.legend(loc="lower right")
+        plt.xlim([0, 1])
+        plt.ylim([0, 1])
+        plt.grid(linestyle='--', alpha=0.7)
         plt.show()
-        
+
         # Plot confusion matrix
         plt.figure(figsize=(8, 6))
         sns.set(font_scale=1.4)
-        sns.heatmap(confusion_matrix(self.y_test, y_pred), annot=True, fmt='g')
+        sns.set_style("ticks")
+        sns.heatmap(confusion_matrix(self.y_test, y_pred), annot=True, fmt='g',cmap=sns.color_palette(["#C9D9D3", "#2F4B7C"]))
         plt.xlabel('Predicted', fontsize=14)
         plt.ylabel('True', fontsize=14)
         plt.title('Confusion Matrix', fontsize=18, fontweight='bold')
+        plt.tick_params(axis='both', which='both', length=0)
         plt.show()
-        
-        # Plot bar chart of top n correlated features
+
+       # Plot bar chart of top n correlated features
         corr = self.df.corr()
         corr_target = abs(corr["target"])
         top_features = corr_target.sort_values(ascending=False)[1:n+1]
-        top_features.plot(kind="bar", figsize=(10,10))
-        plt.xlabel('Features', fontsize=14)
-        plt.ylabel('Correlation with target', fontsize=14)
+        colors = ['grey' if c < 0 else 'lightblue' for c in top_features.values]
+        plt.figure(figsize=(12,8))
+        plt.barh(y=top_features.index, width=top_features.values, color=colors)
+        plt.xlabel('Correlation with Target', fontsize=14)
+        plt.ylabel('Features', fontsize=14)
         plt.title(f'Top {n} Correlated Features', fontsize=18, fontweight='bold')
-        plt.xticks(rotation=45, ha='right', fontsize=8)
+        plt.xticks(fontsize=12)
+        plt.yticks(fontsize=12)
         plt.show()
 
         # create the predicted cancer cases file
@@ -150,11 +158,42 @@ class BinaryClassificationModel:
         cv_scores = cross_val_score(self.classifier, self.data.data, self.data.target, cv=5)
         print("Cross-validation Scores:", cv_scores)
         print("Mean Cross-validation Score:", np.mean(cv_scores))
+        
+    def feature_selection_correlation(self):
+        """
+        Selects the most correlated features and compares them against each other.
+        """
+        # Correlation between features and target
+        corr_with_target = self.df.corrwith(self.df['target']).abs().sort_values(ascending=False)
 
+        # Select the top 10 features with the highest correlation with the target
+        top_features = corr_with_target.iloc[1:11].index.values
+
+        # Correlation matrix of the selected features
+        corr_matrix = self.df[top_features].corr()
+
+        # Set the style and create the heatmap
+        sns.set(style="ticks", font_scale=1.2)
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(corr_matrix, annot=True, cmap="Blues", linewidths=0.5)
+
+        # Set the title and axis labels
+        plt.title("Correlation Matrix of the Most Correlated Features", fontsize=16, fontweight='bold')
+        plt.xlabel('Features', fontsize=14, fontweight='bold')
+        plt.ylabel('Features', fontsize=14, fontweight='bold')
+
+        # Set tick label size
+        plt.xticks(fontsize=10)
+        plt.yticks(fontsize=10)
+
+        # Display the plot
+        plt.show()
+        
 if __name__ == "__main__":
     data = load_breast_cancer()
     model = BinaryClassificationModel(data, max_iter=3000)
     model.visualize_class_distribution()
+    model.feature_selection_correlation()
     model.preprocess_data()
     model.train_model()
     model.evaluate_model()
