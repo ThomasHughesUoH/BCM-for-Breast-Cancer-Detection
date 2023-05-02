@@ -14,8 +14,12 @@ Overall, this program offers a powerful and flexible tool for binary classificat
 
 Example Data Visualisation Output:
 
-                                              ![Figure_1 2](https://user-images.githubusercontent.com/94536625/234716017-2c221ea7-202d-4bef-8522-29b31bee6034.png)
+   ![Figure_1](https://user-images.githubusercontent.com/94536625/235740112-4688602d-0d14-489b-903b-8ea878bc9ed3.png)
 
-                                              ![Figure_1 3](https://user-images.githubusercontent.com/94536625/234716036-d784891b-e26b-456c-8232-cf6746d3bb35.png)
-                                              
-                                              ![Figure_1 4](https://user-images.githubusercontent.com/94536625/234716051-0fe573dd-a110-40e8-a3a1-a22f71abff96.png)
+   ![Figure_2](https://user-images.githubusercontent.com/94536625/235740133-512c4362-223f-4b0a-b2cf-a4704dbc4c28.png)
+
+   ![Figure_3](https://user-images.githubusercontent.com/94536625/235740144-d9a56aec-3c3a-4e28-b32f-effc2fea1139.png)
+
+   ![Figure_4](https://user-images.githubusercontent.com/94536625/235740156-52681311-01fa-49d7-8a46-8026485bf092.png)
+
+   ![Figure_5](https://user-images.githubusercontent.com/94536625/235740188-4697a64c-070d-47c6-93b1-25468a93b27f.png)
