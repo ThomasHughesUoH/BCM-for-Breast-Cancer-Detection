@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression # This imports the LogisticR
 from sklearn.metrics import accuracy_score, roc_curve, auc, confusion_matrix # This imports several metrics for evaluating the performance of a classification model. accuracy_score computes the accuracy of a model's predictions, while roc_curve and auc are used to generate and evaluate the Receiver Operating Characteristic (ROC) curve. confusion_matrix is a way of evaluating the number of true positives, true negatives, false positives, and false negatives in a classification problem.
 
 """
-This code defines a class called BinaryClassificationModel which performs binary classification on a pre-defined dataset of breast cancer patients' information.
+This code defines a class called breast_cancer_binary_classification_model which performs binary classification on a pre-defined dataset of breast cancer patients' information.
 The class initializes with the dataset, which is a Bunch object containing both the features and target. The dataset is split into training and testing sets using train_test_split.
 The training and testing features are then scaled using StandardScaler and the LogisticRegression algorithm is used to fit the model.
 
@@ -18,10 +18,10 @@ The evaluate_model method generates and displays various evaluation metrics and 
 The cross_val method performs cross-validation on the model.
 """
 
-class BinaryClassificationModel:
+class breast_cancer_binary_classification_model:
     def __init__(self, data, max_iter=3000):
         """
-        Initializes a BinaryClassificationModel object.
+        Initializes a breast_cancer_binary_classification_model object.
 
         Args:
             data (sklearn.datasets.base.Bunch): A bunch object containing both the features and target.
@@ -191,7 +191,7 @@ class BinaryClassificationModel:
         
 if __name__ == "__main__":
     data = load_breast_cancer()
-    model = BinaryClassificationModel(data, max_iter=3000)
+    model = breast_cancer_binary_classification_model(data, max_iter=3000)
     model.visualize_class_distribution()
     model.feature_selection_correlation()
     model.preprocess_data()
